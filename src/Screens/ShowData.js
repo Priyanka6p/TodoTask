@@ -13,13 +13,6 @@ export default function ShowData(){
     const dispatch = useDispatch();
     const items = useSelector(state=>state.toDo);
     console.log(items,'items');
-
-    const deleteData =(id)=>{
-        const tempData = items.filter((item)=>item.id!==id);
-            dispatch(delTodo(id))
-            // delData(id);
-            // removeData('todoData');
-    };
     
     return(
         <View style={styles.container}>
@@ -28,13 +21,14 @@ export default function ShowData(){
                 showsVerticalScrollIndicator={false} 
                 data={items}
                 horizontal={false}
-                renderItem={({item})=>(
+                renderItem={({item, index})=>(
                     <View style={styles.dataRow}>
                         <Text style={styles.itemTxt}>
                             {item.value}
                         </Text>
                         <TouchableOpacity
-                            onPress={deleteData}>
+                            onPress={()=>{dispatch(delTodo(index))}}
+                        >
                             <MaterialCommunityIcons name="delete-empty" size={44} color="white" style={styles.delBtn}/>
                         </TouchableOpacity>
                     </View>

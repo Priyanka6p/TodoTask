@@ -3,29 +3,33 @@ import { useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToDo } from "../Redux/reducers/counterSlice";
 import { storeData } from "../utils/asyncStorage";
+import { getData } from "../utils/asyncStorage";
 import ButtonComp from "../Components/ButtonComp";
 import { addData } from "../Redux/actions/actions";
 
 
 export default function AddTodo({navigation}){
 
-const todoArr=useSelector((state)=>state.toDo)
+const todoArr=useSelector((state)=>state.toDo);
 console.log(todoArr);
    
 const [value, setValue] = useState('');
 const dispatch = useDispatch();
+
 const formData={id:Date.now(),value:value}
+
 const Add=()=>{
     if(!value.trim())
     {
         return;
     }
-    storeData('todoData',[formData,...todoArr])
-    // dispatch(addToDo([formData,...todoArr]));    
+    storeData('todoData',[formData,...todoArr]);
+    // dispatch(addToDo([formData,...todoArr]));   
     addData([formData,...todoArr])             
 }
 
 const ShowTodoData=()=>{
+    getData();
     navigation.navigate('ShowData');
 }
 
